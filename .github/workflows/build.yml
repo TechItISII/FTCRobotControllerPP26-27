@@ -1,0 +1,28 @@
+name: FTC Build Check
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del codice
+        uses: actions/checkout@v4
+
+      - name: Configura Java JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Permessi di esecuzione Gradle
+        run: chmod +x gradlew
+
+      - name: Compila APK Debug
+        run: ./gradlew assembleDebug
